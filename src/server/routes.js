@@ -1,10 +1,17 @@
+import { Response } from 'miragejs'
+import { encrypt, decrypt } from 'utils/crypt'
+
 function auth(schema, request) {
-  const { username } = JSON.parse(request.requestBody)
-  const user = schema.users.findBy({ username })
+  const { email, password } = JSON.parse(request.requestBody)
+  const user = schema.users.findBy({ email })
   if (!user) {
     return new Response(404, {}, { message: 'User not found' })
   }
-  return new Response(201, { Authorization: `Bearer` })
+  if (password !== decrypt(user.attrs.password)) {
+    return new Response(403, {}, { message: 'Invalid password' })
+  }
+  const token = encrypt(request.requestBody)
+  return new Response(201, { Authorization: `Bearer ${token}` })
 }
 
 export default function () {
