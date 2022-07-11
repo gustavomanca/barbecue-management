@@ -1,6 +1,8 @@
+import { encrypt } from 'utils/crypt'
+
 const BYPASS_USER = {
   email: 'gustavo.mancaa@gmail.com',
-  password: 'churras'
+  password: encrypt('churras')
 }
 
 const usersSeeder = (server) => {
