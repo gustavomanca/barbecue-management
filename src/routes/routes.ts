@@ -4,7 +4,8 @@ import { RouteProps } from './typings'
 const routes: RouteProps[] = [
   {
     path: '/',
-    element: Home
+    element: Home,
+    isPrivate: true
   },
   {
     path: '/login',
