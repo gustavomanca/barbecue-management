@@ -1,11 +1,13 @@
-import { AES } from 'crypto-js'
+import { AES, enc } from 'crypto-js'
 
-const SECRET_KEY = 'barbecue-management'
+const SECRET_KEY = process.env.REACT_APP_SECRET_KEY
 
 export function decrypt(text: string): string {
-  return AES.decrypt(text, SECRET_KEY).toString(CryptoJS.enc.Utf8)
+  if (!SECRET_KEY) return ''
+  return AES.decrypt(text, SECRET_KEY).toString(enc.Utf8)
 }
 
 export function encrypt(text: string): string {
+  if (!SECRET_KEY) return ''
   return AES.encrypt(text, SECRET_KEY).toString()
 }
