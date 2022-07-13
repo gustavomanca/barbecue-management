@@ -6,6 +6,7 @@ import cogoToast from 'cogo-toast'
 
 import Button from 'components/Button'
 import TextField from 'components/TextField'
+
 import useApi from 'hooks/useApi'
 import useToken from 'hooks/useToken'
 
@@ -45,6 +46,7 @@ function LoginPage() {
 
   return (
     <S.Container>
+      <S.Brand />
       <S.Form onSubmit={onSubmit}>
         <TextField
           type="email"
