@@ -16,8 +16,6 @@ export const Input = styled.input`
     height: 100%;
     width: 100%;
 
-    font-size: ${theme.font.sizes.medium};
-
     &:focus {
       outline: 1px solid ${darken(0.1, theme.colors.gray)};
     }

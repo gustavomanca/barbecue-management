@@ -4,9 +4,12 @@ import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import cogoToast from 'cogo-toast'
 
+import Button from 'components/Button'
+import TextField from 'components/TextField'
 import useApi from 'hooks/useApi'
 import useToken from 'hooks/useToken'
-import TextField from 'components/TextField'
+
+import * as S from './styles'
 
 function LoginPage() {
   const { api } = useApi()
@@ -25,6 +28,7 @@ function LoginPage() {
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
+    if (!payload.email || !payload.password) return
 
     try {
       const response = await api.post('/auth', payload)
@@ -40,8 +44,8 @@ function LoginPage() {
   }
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
+    <S.Container>
+      <S.Form onSubmit={onSubmit}>
         <TextField
           type="email"
           name="email"
@@ -56,9 +60,11 @@ function LoginPage() {
           value={payload.password}
           onChange={handleChange}
         />
-        <button type="submit">Sign In</button>
-      </form>
-    </div>
+        <Button type="submit" disabled={!payload.email || !payload.password}>
+          Entrar
+        </Button>
+      </S.Form>
+    </S.Container>
   )
 }
 

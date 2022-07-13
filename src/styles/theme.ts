@@ -26,12 +26,15 @@ export default {
   },
   colors: {
     black: '#000000',
-    bloodRed: '#630200',
-    platinum: '#e9e9e9',
     gray: '#c1c1c1',
+    white: '#FFFFFF',
+
+    platinum: '#e9e9e9',
     blazeOrange: '#f76c08',
+    sinopia: '#d3370b',
+
     blackBean: '#4a0000',
-    sinopia: '#d3370b'
+    bloodRed: '#630200'
   },
   spacings: {
     xxsmall: '0.8rem',
