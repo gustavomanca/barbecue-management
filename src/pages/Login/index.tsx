@@ -6,6 +6,7 @@ import cogoToast from 'cogo-toast'
 
 import useApi from 'hooks/useApi'
 import useToken from 'hooks/useToken'
+import TextField from 'components/TextField'
 
 function LoginPage() {
   const { api } = useApi()
@@ -41,15 +42,17 @@ function LoginPage() {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input
+        <TextField
           type="email"
           name="email"
+          placeholder="E-mail"
           value={payload.email}
           onChange={handleChange}
         />
-        <input
+        <TextField
           type="password"
           name="password"
+          placeholder="Senha"
           value={payload.password}
           onChange={handleChange}
         />

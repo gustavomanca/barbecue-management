@@ -28,6 +28,7 @@ export default {
     black: '#000000',
     bloodRed: '#630200',
     platinum: '#e9e9e9',
+    gray: '#c1c1c1',
     blazeOrange: '#f76c08',
     blackBean: '#4a0000',
     sinopia: '#d3370b'
