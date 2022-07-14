@@ -7,7 +7,9 @@ import {
   useState
 } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { encrypt } from 'utils/crypt'
+import { delay } from 'utils/delay'
 import { getToken, setToken } from 'utils/storage'
 
 type AuthContextProps = {
@@ -48,8 +50,9 @@ export function AuthProvider({ children }: Props) {
     setToken(accessToken)
   }, [accessToken])
 
-  function signIn(credentials: CredentialsProps) {
+  async function signIn(credentials: CredentialsProps) {
     setLoading(true)
+    await delay()
     const encrypted = encrypt(JSON.stringify(credentials))
     setAccessToken(encrypted)
     setLoading(false)
