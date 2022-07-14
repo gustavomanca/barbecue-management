@@ -56,7 +56,7 @@ export function AuthProvider({ children }: Props) {
     const encrypted = encrypt(JSON.stringify(credentials))
     setAccessToken(encrypted)
     setLoading(false)
-    navigate('/test')
+    navigate('/')
   }
 
   function signOut() {

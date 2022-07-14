@@ -23,7 +23,6 @@ function Routing() {
           }
         />
       ))}
-
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

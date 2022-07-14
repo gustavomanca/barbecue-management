@@ -1,9 +1,8 @@
 import { ReactNode } from 'react'
 import { ThemeProvider } from 'styled-components'
 
-// import { LoaderContext } from './Loader'
-
 import theme from 'styles/theme'
+
 import { AuthProvider } from './Auth'
 
 type Props = {
@@ -13,11 +12,7 @@ type Props = {
 function Contexts({ children }: Props) {
   return (
     <ThemeProvider theme={theme}>
-      <AuthProvider>
-        {/* <LoaderContext> */}
-        {children}
-        {/* </LoaderContext> */}
-      </AuthProvider>
+      <AuthProvider>{children}</AuthProvider>
     </ThemeProvider>
   )
 }
