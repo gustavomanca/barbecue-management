@@ -1,12 +1,17 @@
 import { ButtonHTMLAttributes } from 'react'
 import * as S from './styles'
 
-type Props = {
+export type Props = {
   className?: string
+  variant?: 'primary' | 'text'
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-function Button({ children, ...props }: Props) {
-  return <S.Container {...props}>{children}</S.Container>
+function Button({ children, variant = 'primary', ...props }: Props) {
+  return (
+    <S.Container variant={variant} {...props}>
+      {children}
+    </S.Container>
+  )
 }
 
 export default Button

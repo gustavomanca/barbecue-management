@@ -1,21 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-import { AxiosError } from 'axios'
-import cogoToast from 'cogo-toast'
 
 import Button from 'components/Button'
 import TextField from 'components/TextField'
 
-import useApi from 'hooks/useApi'
-import useToken from 'hooks/useToken'
+import useAuth from 'contexts/Auth'
 
 import * as S from './styles'
 
 function LoginPage() {
-  const { api } = useApi()
-  const navigate = useNavigate()
-  const { setToken } = useToken()
+  const { signIn } = useAuth()
 
   const [payload, setPayload] = useState({
     email: '',
@@ -27,21 +20,10 @@ function LoginPage() {
     setPayload((prev) => ({ ...prev, [name]: value }))
   }
 
-  async function onSubmit(event: FormEvent) {
+  function onSubmit(event: FormEvent) {
     event.preventDefault()
     if (!payload.email || !payload.password) return
-
-    try {
-      const response = await api.post('/auth', payload)
-      if ('authorization' in response.headers)
-        setToken(response.headers.authorization)
-
-      return navigate('/')
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        cogoToast.error(error?.response?.data.message)
-      }
-    }
+    signIn(payload)
   }
 
   return (

@@ -3,7 +3,7 @@ import { RouteProps } from './typings'
 
 const routes: RouteProps[] = [
   {
-    path: '/',
+    path: '/test',
     element: Home,
     isPrivate: true
   },

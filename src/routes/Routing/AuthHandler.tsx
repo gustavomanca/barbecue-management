@@ -1,13 +1,15 @@
-import useToken from 'hooks/useToken'
 import { Navigate } from 'react-router-dom'
+
+import useAuth from 'contexts/Auth'
 
 type Props = {
   children: JSX.Element
 }
 
 function AuthHandler({ children }: Props) {
-  const { token } = useToken()
-  return token ? children : <Navigate to="/login" />
+  const { accessToken } = useAuth()
+
+  return accessToken ? children : <Navigate to="/login" />
 }
 
 export default AuthHandler

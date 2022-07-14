@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 
+import NotFoundPage from 'pages/NotFound'
+
 import AuthHandler from 'routes/Routing/AuthHandler'
 import routes from '../routes'
 
@@ -11,16 +13,18 @@ function Routing() {
           key={path}
           path={path}
           element={
-            isPrivate ? (
+            !isPrivate ? (
+              <Component />
+            ) : (
               <AuthHandler>
                 <Component />
               </AuthHandler>
-            ) : (
-              <Component />
             )
           }
         />
       ))}
+
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
 }

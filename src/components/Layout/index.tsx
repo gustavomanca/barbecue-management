@@ -1,6 +1,8 @@
-import Loader from 'components/Loader'
-import useLoader from 'hooks/useLoader'
 import { ReactNode } from 'react'
+
+import Navbar from 'components/Navbar'
+import useAuth from 'contexts/Auth'
+
 import * as S from './styles'
 
 type Props = {
@@ -8,12 +10,11 @@ type Props = {
 }
 
 function Layout({ children }: Props) {
-  const { loading } = useLoader()
+  const { accessToken } = useAuth()
 
   return (
     <S.Container>
-      {loading && <Loader />}
-
+      {accessToken && <Navbar />}
       <S.Children>{children}</S.Children>
     </S.Container>
   )

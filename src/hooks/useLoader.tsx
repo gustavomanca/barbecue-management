@@ -30,7 +30,11 @@ function useLoader() {
     }
   )
 
-  return { loading }
+  function toggleLoader(status: boolean) {
+    setLoading(status)
+  }
+
+  return { loading, toggleLoader }
 }
 
 export default useLoader
