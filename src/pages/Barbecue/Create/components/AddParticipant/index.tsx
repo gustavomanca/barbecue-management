@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import Button from 'components/Button'
 import TextField from 'components/TextField'
 
-import { Participant } from '../../typings'
+import { Participant } from '../../../typings'
 
 import * as S from './styles'
 

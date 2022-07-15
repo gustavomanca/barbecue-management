@@ -1,10 +1,9 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import cogoToast from 'cogo-toast'
 
 import Button from 'components/Button'
-import Checkbox from 'components/Checkbox'
 import TextField from 'components/TextField'
 
 import { verifyIfIsAFutureDate } from 'utils/date'
@@ -13,7 +12,9 @@ import { getRandomGreetings } from 'utils/messages'
 import { generateUUID } from 'utils/uuid'
 
 import { Barbecue, Participant } from '../typings'
-import AddParticipant from './AddParticipant'
+
+import AddParticipant from './components/AddParticipant'
+import ParticipantsList from './components/ParticipantsList'
 import * as S from './styles'
 
 export function CreateBarbecuePage() {
@@ -50,32 +51,9 @@ export function CreateBarbecuePage() {
     cogoToast.success(`${greeting}, ${participant.name}`)
   }
 
-  const onCheckParticipant = (event: ChangeEvent<HTMLInputElement>) => {
-    const { checked, id } = event.target
-    const updated = [...barbecue.participants]
-    const foundIndex = barbecue.participants.findIndex(
-      (participant) => participant.id === id
-    )
-    updated.splice(foundIndex, 1, {
-      ...barbecue.participants[foundIndex],
-      paid: checked
-    })
-    setBarbecue((prev) => ({ ...prev, participants: updated }))
+  const onUpdateParticipants = (participants: Participant[]) => {
+    setBarbecue((prev) => ({ ...prev, participants }))
   }
-
-  const onDeleteParticipant = (id: string) => {
-    if (!id) return
-    const updated = [...barbecue.participants]
-    const foundIndex = barbecue.participants.findIndex(
-      (participant) => participant.id === id
-    )
-    updated.splice(foundIndex, 1)
-    setBarbecue((prev) => ({ ...prev, participants: updated }))
-  }
-
-  useEffect(() => {
-    console.log({ participants: barbecue.participants })
-  }, [barbecue])
 
   return (
     <S.Container>
@@ -108,26 +86,10 @@ export function CreateBarbecuePage() {
           </S.Actions>
         </S.Form>
 
-        <S.ParticipantsList>
-          {barbecue.participants.map((participant) => (
-            <S.Item key={participant.id}>
-              <Checkbox
-                name={participant.id}
-                id={participant.id}
-                onChange={onCheckParticipant}
-                label={`${participant.name} - R$ ${
-                  participant.value ?? '0,00'
-                }`}
-                lineThrough={participant.paid}
-              />
-              <S.RemoveParticipant
-                onClick={() => onDeleteParticipant(participant?.id ?? '')}
-              >
-                <S.TrashIcon />
-              </S.RemoveParticipant>
-            </S.Item>
-          ))}
-        </S.ParticipantsList>
+        <ParticipantsList
+          onUpdateParticipants={onUpdateParticipants}
+          participants={barbecue.participants}
+        />
       </S.Grid>
     </S.Container>
   )
