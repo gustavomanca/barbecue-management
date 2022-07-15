@@ -4,27 +4,31 @@ import NotFoundPage from 'pages/NotFound'
 
 import AuthHandler from 'routes/Routing/AuthHandler'
 import routes from '../routes'
+import { Suspense } from 'react'
+import Loader from 'components/Loader'
 
 function Routing() {
   return (
-    <Routes>
-      {routes.map(({ path, element: Component, isPrivate }) => (
-        <Route
-          key={path}
-          path={path}
-          element={
-            !isPrivate ? (
-              <Component />
-            ) : (
-              <AuthHandler>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        {routes.map(({ path, element: Component, isPrivate }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              !isPrivate ? (
                 <Component />
-              </AuthHandler>
-            )
-          }
-        />
-      ))}
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+              ) : (
+                <AuthHandler>
+                  <Component />
+                </AuthHandler>
+              )
+            }
+          />
+        ))}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   )
 }
 

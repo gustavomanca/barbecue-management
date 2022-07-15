@@ -1,5 +1,7 @@
+import { LazyExoticComponent } from 'react'
+
 export type RouteProps = {
   path: string
-  element: () => JSX.Element
+  element: LazyExoticComponent<any>
   isPrivate?: boolean
 }

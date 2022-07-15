@@ -8,7 +8,6 @@ type Props = {
 
 function AuthHandler({ children }: Props) {
   const { accessToken } = useAuth()
-
   return accessToken ? children : <Navigate to="/login" />
 }
 

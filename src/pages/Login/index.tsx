@@ -7,7 +7,7 @@ import useAuth from 'contexts/Auth'
 
 import * as S from './styles'
 
-function LoginPage() {
+export function LoginPage() {
   const { signIn } = useAuth()
 
   const [payload, setPayload] = useState({
@@ -51,5 +51,3 @@ function LoginPage() {
     </S.Container>
   )
 }
-
-export default LoginPage
