@@ -29,8 +29,6 @@ export const Form = styled.form`
   `}
 `
 
-export const NewParticipantWrapper = styled.div``
-
 export const ParticipantsList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -41,5 +39,12 @@ export const DarkTextButton = styled(Button).attrs({
 })`
   ${({ theme }) => css`
     color: ${theme.colors.blackBean};
+  `}
+`
+
+export const Actions = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    gap: ${theme.spacings.xsmall};
   `}
 `

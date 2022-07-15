@@ -2,23 +2,17 @@ import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import cogoToast from 'cogo-toast'
-import isFuture from 'date-fns/isFuture'
 
 import Button from 'components/Button'
 import TextField from 'components/TextField'
 
+import { dateMask } from 'utils/masks'
 import { getRandomGreetings } from 'utils/messages'
 
 import { Barbecue, Participant } from '../typings'
 import AddParticipant from './AddParticipant'
 import * as S from './styles'
-
-export const dateMask = (value: string) =>
-  value
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '$1/$2')
-    .replace(/(\d{2})(\d)/, '$1/$2')
-    .replace(/\d{4}(\d)/, '$1')
+import { verifyIfIsAFutureDate } from 'utils/date'
 
 export function CreateBarbecuePage() {
   const navigate = useNavigate()
@@ -39,12 +33,9 @@ export function CreateBarbecuePage() {
     const masked = dateMask(value)
     setBarbecue((prev) => ({ ...prev, date: masked }))
 
-    if (masked.length === 10) {
-      const date = isFuture(new Date(value.split('/').reverse().join('/')))
-        ? value
-        : ''
-      setBarbecue((prev) => ({ ...prev, date }))
-    }
+    const isValidDate = verifyIfIsAFutureDate(value)
+    const date = isValidDate ? masked : ''
+    setBarbecue((prev) => ({ ...prev, date }))
   }
 
   const onAddParticipant = (participant: Participant) => {
@@ -74,25 +65,24 @@ export function CreateBarbecuePage() {
             onChange={handleDate}
             name="date"
           />
-
-          <S.NewParticipantWrapper>
-            <S.DarkTextButton onClick={() => setAddMode(true)}>
-              + Adicionar participante
+          <AddParticipant
+            addMode={addMode}
+            setAddMode={setAddMode}
+            onAddParticipant={onAddParticipant}
+          />
+          <S.Actions>
+            <S.DarkTextButton onClick={() => navigate(-1)}>
+              Voltar
             </S.DarkTextButton>
-            {addMode && <AddParticipant onAddParticipant={onAddParticipant} />}
-          </S.NewParticipantWrapper>
-
-          <S.DarkTextButton onClick={() => navigate(-1)}>
-            Voltar
-          </S.DarkTextButton>
-          <Button>Criar</Button>
+            <Button>Criar</Button>
+          </S.Actions>
         </S.Form>
 
         <S.ParticipantsList>
           {barbecue.participants.map((participant) => (
-            <span key={participant.name}>
+            <li key={participant.name}>
               {participant.name} - R$ {participant.value ?? '0,00'}
-            </span>
+            </li>
           ))}
         </S.ParticipantsList>
       </S.Grid>

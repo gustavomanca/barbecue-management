@@ -8,4 +8,5 @@ export type Barbecue = {
 export type Participant = {
   name: string
   value?: string
+  paid?: boolean
 }
