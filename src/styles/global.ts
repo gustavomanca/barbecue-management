@@ -21,6 +21,10 @@ ${({ theme }) => css`
   body {
     background-color: ${theme.colors.platinum};
   }
+
+  ul {
+    list-style: none;
+  }
 `}
 `
 

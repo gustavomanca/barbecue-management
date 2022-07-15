@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import cogoToast from 'cogo-toast'
@@ -6,13 +6,15 @@ import cogoToast from 'cogo-toast'
 import Button from 'components/Button'
 import TextField from 'components/TextField'
 
+import { verifyIfIsAFutureDate } from 'utils/date'
 import { dateMask } from 'utils/masks'
 import { getRandomGreetings } from 'utils/messages'
+import { generateUUID } from 'utils/uuid'
 
 import { Barbecue, Participant } from '../typings'
 import AddParticipant from './AddParticipant'
 import * as S from './styles'
-import { verifyIfIsAFutureDate } from 'utils/date'
+import Checkbox from 'components/Checkbox'
 
 export function CreateBarbecuePage() {
   const navigate = useNavigate()
@@ -41,11 +43,29 @@ export function CreateBarbecuePage() {
   const onAddParticipant = (participant: Participant) => {
     const greeting = getRandomGreetings()
     const updated = [...barbecue.participants]
+    Object.assign(participant, { id: generateUUID(), paid: false })
     updated.push(participant)
     setBarbecue((prev) => ({ ...prev, participants: updated }))
     setAddMode(false)
     cogoToast.success(`${greeting}, ${participant.name}`)
   }
+
+  const onCheckParticipant = (event: ChangeEvent<HTMLInputElement>) => {
+    const { checked, id } = event.target
+    const updated = [...barbecue.participants]
+    const foundIndex = barbecue.participants.findIndex(
+      (participant) => participant.id === id
+    )
+    updated.splice(foundIndex, 1, {
+      ...barbecue.participants[foundIndex],
+      paid: checked
+    })
+    setBarbecue((prev) => ({ ...prev, participants: updated }))
+  }
+
+  useEffect(() => {
+    console.log({ participants: barbecue.participants })
+  }, [barbecue])
 
   return (
     <S.Container>
@@ -80,9 +100,17 @@ export function CreateBarbecuePage() {
 
         <S.ParticipantsList>
           {barbecue.participants.map((participant) => (
-            <li key={participant.name}>
-              {participant.name} - R$ {participant.value ?? '0,00'}
-            </li>
+            <S.Item key={participant.name}>
+              <Checkbox
+                name={participant.id}
+                id={participant.id}
+                onChange={onCheckParticipant}
+                label={`${participant.name} - R$ ${
+                  participant.value ?? '0,00'
+                }`}
+                lineThrough={participant.paid}
+              />
+            </S.Item>
           ))}
         </S.ParticipantsList>
       </S.Grid>

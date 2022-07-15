@@ -6,6 +6,7 @@ export type Barbecue = {
 }
 
 export type Participant = {
+  id?: string
   name: string
   value?: string
   paid?: boolean
