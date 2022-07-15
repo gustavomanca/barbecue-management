@@ -6,9 +6,14 @@ export type Props = {
   variant?: 'primary' | 'text'
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-function Button({ children, variant = 'primary', ...props }: Props) {
+function Button({
+  children,
+  type = 'button',
+  variant = 'primary',
+  ...props
+}: Props) {
   return (
-    <S.Container variant={variant} {...props}>
+    <S.Container type={type} variant={variant} {...props}>
       {children}
     </S.Container>
   )
