@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import cogoToast from 'cogo-toast'
 
 import Button from 'components/Button'
+import Checkbox from 'components/Checkbox'
 import TextField from 'components/TextField'
 
 import { verifyIfIsAFutureDate } from 'utils/date'
@@ -14,7 +15,6 @@ import { generateUUID } from 'utils/uuid'
 import { Barbecue, Participant } from '../typings'
 import AddParticipant from './AddParticipant'
 import * as S from './styles'
-import Checkbox from 'components/Checkbox'
 
 export function CreateBarbecuePage() {
   const navigate = useNavigate()
@@ -63,6 +63,16 @@ export function CreateBarbecuePage() {
     setBarbecue((prev) => ({ ...prev, participants: updated }))
   }
 
+  const onDeleteParticipant = (id: string) => {
+    if (!id) return
+    const updated = [...barbecue.participants]
+    const foundIndex = barbecue.participants.findIndex(
+      (participant) => participant.id === id
+    )
+    updated.splice(foundIndex, 1)
+    setBarbecue((prev) => ({ ...prev, participants: updated }))
+  }
+
   useEffect(() => {
     console.log({ participants: barbecue.participants })
   }, [barbecue])
@@ -100,7 +110,7 @@ export function CreateBarbecuePage() {
 
         <S.ParticipantsList>
           {barbecue.participants.map((participant) => (
-            <S.Item key={participant.name}>
+            <S.Item key={participant.id}>
               <Checkbox
                 name={participant.id}
                 id={participant.id}
@@ -110,6 +120,11 @@ export function CreateBarbecuePage() {
                 }`}
                 lineThrough={participant.paid}
               />
+              <S.RemoveParticipant
+                onClick={() => onDeleteParticipant(participant?.id ?? '')}
+              >
+                <S.TrashIcon />
+              </S.RemoveParticipant>
             </S.Item>
           ))}
         </S.ParticipantsList>

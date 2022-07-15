@@ -24,6 +24,10 @@ ${({ theme }) => css`
     background-color: ${theme.colors.platinum};
   }
 
+  button {
+    cursor: pointer;
+  }
+
   ul {
     list-style: none;
   }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Button from 'components/Button'
 import TextField from 'components/TextField'
@@ -16,11 +16,17 @@ type Props = {
 function AddParticipant({ addMode, setAddMode, onAddParticipant }: Props) {
   const [newParticipant, setNewParticipant] = useState<Participant | null>(null)
 
+  const nameRef = useRef<HTMLInputElement>(null)
+
   const handleAddParticipant = () => {
     if (!newParticipant) return
     onAddParticipant(newParticipant)
     setNewParticipant(null)
   }
+
+  useEffect(() => {
+    if (addMode) nameRef?.current?.focus()
+  }, [addMode])
 
   return (
     <S.Container>
@@ -30,6 +36,7 @@ function AddParticipant({ addMode, setAddMode, onAddParticipant }: Props) {
       {addMode && (
         <S.AddModeWrapper>
           <TextField
+            ref={nameRef}
             placeholder="Nome"
             value={newParticipant?.name ?? ''}
             onChange={({ target }) =>
