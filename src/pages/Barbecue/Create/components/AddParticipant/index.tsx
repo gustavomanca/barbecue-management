@@ -6,6 +6,7 @@ import TextField from 'components/TextField'
 import { Participant } from '../../../typings'
 
 import * as S from './styles'
+import { currencyMask } from 'utils/masks'
 
 type Props = {
   addMode: boolean
@@ -15,11 +16,19 @@ type Props = {
 
 function AddParticipant({ addMode, setAddMode, onAddParticipant }: Props) {
   const [newParticipant, setNewParticipant] = useState<Participant | null>(null)
+  const [error, setError] = useState({
+    name: ''
+  })
 
   const nameRef = useRef<HTMLInputElement>(null)
 
   const handleAddParticipant = () => {
-    if (!newParticipant) return
+    if (!newParticipant?.name)
+      return setError((prev) => ({
+        ...prev,
+        name: 'Informe o nome do participante!'
+      }))
+
     onAddParticipant(newParticipant)
     setNewParticipant(null)
   }
@@ -37,22 +46,24 @@ function AddParticipant({ addMode, setAddMode, onAddParticipant }: Props) {
         <S.AddModeWrapper>
           <TextField
             ref={nameRef}
+            error={error.name}
             placeholder="Nome"
             value={newParticipant?.name ?? ''}
-            onChange={({ target }) =>
+            onChange={({ target }) => {
+              setError((prev) => ({ ...prev, name: '' }))
               setNewParticipant((prev) => ({
                 ...prev,
                 name: target.value
               }))
-            }
+            }}
           />
           <TextField
-            placeholder="Valor"
+            placeholder="Valor (R$)"
             value={newParticipant?.value ?? ''}
             onChange={({ target }) =>
               setNewParticipant((prev) => ({
                 ...prev,
-                value: target.value
+                value: currencyMask(target.value)
               }))
             }
           />

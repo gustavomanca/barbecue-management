@@ -25,9 +25,13 @@ export function CreateBarbecuePage() {
     date: '',
     participants: []
   })
+  const [error, setError] = useState({
+    title: ''
+  })
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
+    setError((prev) => ({ ...prev, [name]: '' }))
     setBarbecue((prev) => ({ ...prev, [name]: value }))
   }
 
@@ -51,6 +55,14 @@ export function CreateBarbecuePage() {
     cogoToast.success(`${greeting}, ${participant.name}`)
   }
 
+  const onCreateBarbecue = () => {
+    if (!barbecue.title)
+      return setError((prev) => ({
+        ...prev,
+        title: 'Informe um título para o churras!'
+      }))
+  }
+
   const onUpdateParticipants = (participants: Participant[]) => {
     setBarbecue((prev) => ({ ...prev, participants }))
   }
@@ -62,6 +74,7 @@ export function CreateBarbecuePage() {
       <S.Grid>
         <S.Form>
           <TextField
+            error={error.title}
             placeholder="Informe um título para o seu churras..."
             value={barbecue.title}
             onChange={handleChange}
@@ -82,7 +95,7 @@ export function CreateBarbecuePage() {
             <S.DarkTextButton onClick={() => navigate(-1)}>
               Voltar
             </S.DarkTextButton>
-            <Button>Criar</Button>
+            <Button onClick={onCreateBarbecue}>Criar</Button>
           </S.Actions>
         </S.Form>
 

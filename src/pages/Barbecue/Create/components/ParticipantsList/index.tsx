@@ -33,6 +33,9 @@ function ParticipantsList({ onUpdateParticipants, participants }: Props) {
     onUpdateParticipants(updated)
   }
 
+  if (!participants.length)
+    return <S.Title as="p">Ainda não há participantes na lista!</S.Title>
+
   return (
     <S.Container>
       <S.Title>Participantes</S.Title>
