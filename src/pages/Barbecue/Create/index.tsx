@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 import cogoToast from 'cogo-toast'
 
@@ -12,14 +13,13 @@ import { verifyIfIsAFutureDate } from 'utils/date'
 import { dateMask } from 'utils/masks'
 import { getRandomGreetings } from 'utils/messages'
 import { generateUUID } from 'utils/uuid'
+import { getBarbecueAmount } from 'utils/values'
 
 import { Barbecue, Participant } from '../typings'
 
-import AddParticipant from './components/AddParticipant'
-import ParticipantsList from './components/ParticipantsList'
+import AddParticipant from '../components/AddParticipant'
+import ParticipantsList from '../components/ParticipantsList'
 import * as S from './styles'
-import { AxiosError } from 'axios'
-import { getBarbecueAmount } from 'utils/values'
 
 export function CreateBarbecuePage() {
   const { post } = useApi()

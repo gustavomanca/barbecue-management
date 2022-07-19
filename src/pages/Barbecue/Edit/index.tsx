@@ -17,8 +17,8 @@ import { getBarbecueAmount } from 'utils/values'
 
 import { Barbecue, Participant } from '../typings'
 
-import AddParticipant from './components/AddParticipant'
-import ParticipantsList from './components/ParticipantsList'
+import AddParticipant from '../components/AddParticipant'
+import ParticipantsList from '../components/ParticipantsList'
 import * as S from './styles'
 
 export function EditBarbecuePage() {
