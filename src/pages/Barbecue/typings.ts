@@ -3,6 +3,7 @@ export type Barbecue = {
   id?: string
   title: string
   participants: Array<Participant>
+  amount: number
 }
 
 export type Participant = {

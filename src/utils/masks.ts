@@ -5,6 +5,10 @@ export const dateMask = (value: string) =>
     .replace(/(\d{2})(\d)/, '$1/$2')
     .replace(/\d{4}(\d)/, '$1')
 
+export const currencyStrToNumber = (value: string): number => {
+  return Number(value.replaceAll('.', '').replaceAll(',', '.'))
+}
+
 export const currencyMask = (param: number | string): string => {
   if (!param) return '0,00'
 

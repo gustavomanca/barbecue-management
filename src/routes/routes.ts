@@ -19,6 +19,12 @@ const CreateBarbecue = lazy(() =>
   }))
 )
 
+const EditBarbecue = lazy(() =>
+  import('pages/Barbecue/Edit').then(({ EditBarbecuePage }) => ({
+    default: EditBarbecuePage
+  }))
+)
+
 const routes: RouteProps[] = [
   {
     path: '/',
@@ -32,6 +38,11 @@ const routes: RouteProps[] = [
   {
     path: '/churras/novo',
     element: CreateBarbecue,
+    isPrivate: true
+  },
+  {
+    path: '/churras/editar/:id',
+    element: EditBarbecue,
     isPrivate: true
   }
 ]

@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import cogoToast from 'cogo-toast'
 
@@ -19,9 +19,10 @@ import AddParticipant from './components/AddParticipant'
 import ParticipantsList from './components/ParticipantsList'
 import * as S from './styles'
 
-export function CreateBarbecuePage() {
+export function EditBarbecuePage() {
   const { api } = useApi()
   const navigate = useNavigate()
+  const { id } = useParams()
 
   const [addMode, setAddMode] = useState(false)
   const [barbecue, setBarbecue] = useState<Barbecue>({
@@ -34,6 +35,11 @@ export function CreateBarbecuePage() {
     title: ''
   })
 
+  const fetch = useCallback(async () => {
+    const { data } = await api.get(`/barbecues/${id}`)
+    setBarbecue(data)
+  }, [api, id])
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setError((prev) => ({ ...prev, [name]: '' }))
@@ -43,11 +49,18 @@ export function CreateBarbecuePage() {
   const handleDate = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
     const masked = dateMask(value)
-    setBarbecue((prev) => ({ ...prev, date: masked }))
+
+    if (value.length < 10) {
+      return setBarbecue((prev) => ({ ...prev, date: masked }))
+    }
 
     const isValidDate = verifyIfIsAFutureDate(value)
     const date = isValidDate ? masked : ''
     setBarbecue((prev) => ({ ...prev, date }))
+    if (!isValidDate)
+      cogoToast.error('Data inválida', {
+        hideAfter: 5
+      })
   }
 
   const onAddParticipant = (participant: Participant) => {
@@ -62,30 +75,31 @@ export function CreateBarbecuePage() {
     cogoToast.success(`${greeting}, ${participant.name}`)
   }
 
-  const onCreateBarbecue = () => {
+  const onEditBarbecue = () => {
     if (!barbecue.title)
       return setError((prev) => ({
         ...prev,
         title: 'Informe um título para o churras!'
       }))
 
-    const amount = barbecue.participants.reduce((previous, current) => {
-      console.log({
-        previous,
-        current: current.value,
-        numbered: currencyStrToNumber(current.value ?? '0,00')
-      })
-      return previous + currencyStrToNumber(current?.value ?? '0,00')
-    }, barbecue.amount)
+    const amount = barbecue.participants.reduce(
+      (previous, current) =>
+        previous + currencyStrToNumber(current?.value ?? '0,00'),
+      0
+    )
     Object.assign(barbecue, { amount })
 
-    api.post('/barbecues', barbecue)
+    api.put(`/barbecues/${id}`, barbecue)
     navigate('/')
   }
 
   const onUpdateParticipants = (participants: Participant[]) => {
     setBarbecue((prev) => ({ ...prev, participants }))
   }
+
+  useEffect(() => {
+    fetch()
+  }, [fetch])
 
   return (
     <S.Container>
@@ -115,7 +129,7 @@ export function CreateBarbecuePage() {
             <S.DarkTextButton onClick={() => navigate(-1)}>
               Voltar
             </S.DarkTextButton>
-            <Button onClick={onCreateBarbecue}>Criar</Button>
+            <Button onClick={onEditBarbecue}>Salvar</Button>
           </S.Actions>
         </S.Form>
 
