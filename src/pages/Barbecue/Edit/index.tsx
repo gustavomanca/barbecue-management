@@ -7,7 +7,7 @@ import Form from '../components/Form'
 import ParticipantsList from '../components/ParticipantsList'
 
 import { Barbecue, Participant } from '../typings'
-import * as S from './styles'
+import * as S from '../styles'
 
 export function EditBarbecuePage() {
   const { api } = useApi()
