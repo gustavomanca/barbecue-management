@@ -9,7 +9,7 @@ import TextField from 'components/TextField'
 import useApi from 'hooks/useApi'
 
 import { verifyIfIsAFutureDate } from 'utils/date'
-import { currencyStrToNumber, dateMask } from 'utils/masks'
+import { dateMask } from 'utils/masks'
 import { getRandomGreetings } from 'utils/messages'
 import { generateUUID } from 'utils/uuid'
 
@@ -18,9 +18,11 @@ import { Barbecue, Participant } from '../typings'
 import AddParticipant from './components/AddParticipant'
 import ParticipantsList from './components/ParticipantsList'
 import * as S from './styles'
+import { AxiosError } from 'axios'
+import { getBarbecueAmount } from 'utils/values'
 
 export function CreateBarbecuePage() {
-  const { api } = useApi()
+  const { post } = useApi()
   const navigate = useNavigate()
 
   const [addMode, setAddMode] = useState(false)
@@ -62,25 +64,24 @@ export function CreateBarbecuePage() {
     cogoToast.success(`${greeting}, ${participant.name}`)
   }
 
-  const onCreateBarbecue = () => {
+  const onCreateBarbecue = async () => {
     if (!barbecue.title)
       return setError((prev) => ({
         ...prev,
         title: 'Informe um título para o churras!'
       }))
 
-    const amount = barbecue.participants.reduce((previous, current) => {
-      console.log({
-        previous,
-        current: current.value,
-        numbered: currencyStrToNumber(current.value ?? '0,00')
-      })
-      return previous + currencyStrToNumber(current?.value ?? '0,00')
-    }, barbecue.amount)
+    const amount = getBarbecueAmount(barbecue.participants)
     Object.assign(barbecue, { amount })
 
-    api.post('/barbecues', barbecue)
-    navigate('/')
+    try {
+      await post('/barbecues', barbecue)
+      navigate('/')
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        cogoToast.error(`${error.message} - Verifique se o servidor está On.`)
+      }
+    }
   }
 
   const onUpdateParticipants = (participants: Participant[]) => {

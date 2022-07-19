@@ -1,7 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components'
 
-import cogoToastStylesOverride from './cogoToast'
-
 const GlobalStyles = createGlobalStyle`
 ${({ theme }) => css`
   * {
@@ -31,8 +29,6 @@ ${({ theme }) => css`
   ul {
     list-style: none;
   }
-
-  ${cogoToastStylesOverride};
 `}
 `
 

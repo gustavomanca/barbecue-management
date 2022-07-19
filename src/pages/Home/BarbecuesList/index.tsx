@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AxiosError } from 'axios'
+
+import cogoToast from 'cogo-toast'
 
 import useApi from 'hooks/useApi'
 import { Barbecue } from 'pages/Barbecue/typings'
@@ -14,8 +17,14 @@ function BarbecuesList() {
   const [barbecues, setBarbecues] = useState<Barbecue[]>([])
 
   const fetchBarbecues = useCallback(async () => {
-    const { data } = await api.get('/barbecues')
-    setBarbecues(data)
+    try {
+      const { data } = await api.get('/barbecues')
+      setBarbecues(data)
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        cogoToast.error(`${error.message} - Verifique se o servidor está On.`)
+      }
+    }
   }, [api])
 
   useEffect(() => {

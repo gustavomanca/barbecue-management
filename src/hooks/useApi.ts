@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 const api = axios.create({
   baseURL: 'http://localhost:5000',
@@ -21,11 +21,33 @@ export async function fakeRequest(
 }
 
 function useApi() {
+  async function post(path: string, body: Record<string, any>) {
+    try {
+      const response = await api.post(path, body)
+      return response.data
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return Promise.reject(error)
+      }
+    }
+  }
+
+  async function put(path: string, body: Record<string, any>) {
+    try {
+      const response = await api.put(path, body)
+      return response.data
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return Promise.reject(error)
+      }
+    }
+  }
+
   async function signIn(payload: PayloadProps) {
     await fakeRequest(payload)
   }
 
-  return { api, signIn }
+  return { api, post, put, signIn }
 }
 
 export default useApi
