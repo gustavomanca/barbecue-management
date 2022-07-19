@@ -7,15 +7,14 @@ import cogoToast from 'cogo-toast'
 import Button from 'components/Button'
 import TextField from 'components/TextField'
 
-import useApi from 'hooks/useApi'
+import { Barbecue, Participant } from 'pages/Barbecue/typings'
+import { post, put } from 'services/api'
 
 import { verifyIfIsAFutureDate } from 'utils/date'
 import { dateMask } from 'utils/masks'
 import { getRandomGreetings } from 'utils/messages'
 import { generateUUID } from 'utils/uuid'
 import { getBarbecueAmount } from 'utils/values'
-
-import { Barbecue, Participant } from 'pages/Barbecue/typings'
 
 import AddParticipant from '../AddParticipant'
 import * as S from './styles'
@@ -26,7 +25,6 @@ type Props = {
 }
 
 function Form({ barbecue, setBarbecue }: Props) {
-  const { post, put } = useApi()
   const navigate = useNavigate()
 
   const [addMode, setAddMode] = useState(false)

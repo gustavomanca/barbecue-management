@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import useApi from 'hooks/useApi'
+import { get } from 'services/api'
 
 import Form from '../components/Form'
 import ParticipantsList from '../components/ParticipantsList'
@@ -10,7 +10,6 @@ import { Barbecue, Participant } from '../typings'
 import * as S from '../styles'
 
 export function EditBarbecuePage() {
-  const { api } = useApi()
   const { id } = useParams()
 
   const [barbecue, setBarbecue] = useState<Barbecue>({
@@ -21,9 +20,9 @@ export function EditBarbecuePage() {
   })
 
   const fetch = useCallback(async () => {
-    const { data } = await api.get(`/barbecues/${id}`)
+    const { data } = await get(`/barbecues/${id}`)
     setBarbecue(data)
-  }, [api, id])
+  }, [id])
 
   const onUpdateParticipants = (participants: Participant[]) => {
     setBarbecue((prev) => ({ ...prev, participants }))

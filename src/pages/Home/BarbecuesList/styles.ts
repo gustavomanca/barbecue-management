@@ -12,6 +12,8 @@ export const Card = styled.section.attrs({
   title: 'Clique para editar/visualizar'
 })`
   ${({ theme }) => css`
+    position: relative;
+
     border-radius: ${theme.border.radius};
     padding: ${theme.spacings.medium};
 
@@ -30,3 +32,39 @@ export const Card = styled.section.attrs({
 export const Title = styled.h1``
 
 export const Text = styled.p``
+
+export const Delete = styled.button`
+  ${({ theme }) => css`
+    position: absolute;
+    right: ${theme.spacings.xxsmall};
+    top: ${theme.spacings.xxsmall};
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    height: ${theme.spacings.large};
+    width: ${theme.spacings.large};
+
+    background-color: transparent;
+  `}
+`
+
+export const TrashIcon = styled.img.attrs({
+  src: '/assets/images/trash-icon.png'
+})`
+  ${({ theme }) => css`
+    height: ${theme.font.sizes.xlarge};
+    width: ${theme.font.sizes.large};
+
+    opacity: 0.5;
+    transition: opacity 0.3s ease-out;
+    will-change: opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+  `}
+`
