@@ -12,11 +12,8 @@ export const Form = styled.form`
 `
 
 export const DarkTextButton = styled(Button).attrs({
-  variant: 'text'
+  variant: 'darkenText'
 })`
-  ${({ theme }) => css`
-    color: ${theme.colors.blackBean};
-  `}
   ${({ theme }) => css`
     color: ${theme.colors.blackBean};
   `}

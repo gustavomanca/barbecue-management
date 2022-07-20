@@ -21,7 +21,7 @@ export const ParticipantsList = styled.ul`
 `
 
 export const DarkTextButton = styled(Button).attrs({
-  variant: 'text'
+  variant: 'darkenText'
 })`
   ${({ theme }) => css`
     color: ${theme.colors.blackBean};

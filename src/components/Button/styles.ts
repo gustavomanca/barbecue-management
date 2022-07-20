@@ -16,6 +16,17 @@ const kinds = {
       background-color: ${theme.colors.blackBean};
     }
   `,
+  darkenText: (theme: DefaultTheme) => css`
+    background-color: transparent;
+    color: ${theme.colors.blackBean};
+
+    transition: color 0.3s ease;
+    will-change: color;
+
+    &:hover {
+      color: ${darken(0.1, theme.colors.blackBean)};
+    }
+  `,
   text: (theme: DefaultTheme) => css`
     background-color: transparent;
     transition: color 0.3s ease;

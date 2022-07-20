@@ -3,7 +3,7 @@ import * as S from './styles'
 
 export type Props = {
   className?: string
-  variant?: 'primary' | 'text'
+  variant?: 'primary' | 'text' | 'darkenText'
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 function Button({
