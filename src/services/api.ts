@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios'
+import { delay } from 'utils/delay'
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: 'http://localhost:5000',
   headers: {
     'content-type': 'application/json'
@@ -11,7 +12,7 @@ export async function fakeRequest(
   values?: Record<string, any>,
   time?: 3000
 ): Promise<Record<string, any>> {
-  await new Promise((resolve) => setTimeout(resolve, time))
+  await delay(time)
   return { status: 200, data: values }
 }
 

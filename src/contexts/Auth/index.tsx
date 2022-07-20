@@ -8,6 +8,8 @@ import {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { api } from 'services/api'
+
 import { encrypt } from 'utils/crypt'
 import { delay } from 'utils/delay'
 import { getToken, setToken } from 'utils/storage'
@@ -44,6 +46,30 @@ export function AuthProvider({ children }: Props) {
     const token = getToken()
     token && setAccessToken(token)
     setLoadingInitial(false)
+  }, [])
+
+  useEffect(() => {
+    api.interceptors.request.use(
+      async (config) => {
+        setLoading(true)
+        await delay()
+        return config
+      },
+      (error) => {
+        setLoading(false)
+        return Promise.reject(error)
+      }
+    )
+    api.interceptors.response.use(
+      (response) => {
+        setLoading(false)
+        return Promise.resolve(response)
+      },
+      (error) => {
+        setLoading(false)
+        return Promise.reject(error)
+      }
+    )
   }, [])
 
   useEffect(() => {
