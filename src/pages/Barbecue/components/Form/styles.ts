@@ -22,6 +22,13 @@ export const DarkTextButton = styled(Button).attrs({
 export const Actions = styled.div`
   ${({ theme }) => css`
     display: flex;
+    flex-direction: column-reverse;
     gap: ${theme.spacings.xsmall};
+
+    @media (min-width: ${theme.breakpoints.large}) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: ${theme.spacings.large};
+    }
   `}
 `
