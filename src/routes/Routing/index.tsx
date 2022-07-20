@@ -1,11 +1,10 @@
+import { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+import Loader from 'components/Loader'
 import NotFoundPage from 'pages/NotFound'
-
 import AuthHandler from 'routes/Routing/AuthHandler'
 import routes from '../routes'
-import { Suspense } from 'react'
-import Loader from 'components/Loader'
 
 function Routing() {
   return (

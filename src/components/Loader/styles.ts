@@ -14,17 +14,22 @@ const defaultOptions = {
 }
 
 export const Container = styled.div`
-  position: fixed;
-  inset: 50%;
-  transform: translate(-50%, -85%);
-  height: 20rem;
-  width: 20rem;
+  ${({ theme }) => css`
+    position: fixed;
+    inset: 50%;
+    transform: translate(-50%, -85%);
+    height: 20rem;
+    width: 20rem;
+    z-index: ${theme.layers.alwaysOnTop};
+  `}
 `
 
 export const Overlay = styled.span`
   ${({ theme }) => css`
     position: fixed;
     inset: 0 0 0 0;
+    z-index: ${theme.layers.overlay};
+
     background-color: ${rgba(theme.colors.black, 0.6)};
   `}
 `

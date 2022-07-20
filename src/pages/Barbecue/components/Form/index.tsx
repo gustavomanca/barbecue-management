@@ -73,7 +73,7 @@ function Form({ barbecue, setBarbecue }: Props) {
 
     const amount = getBarbecueAmount(barbecue.participants)
     Object.assign(barbecue, { amount })
-    const successMessage = `Churras ${barbecue.title} ${
+    const successMessage = `${barbecue.title} ${
       barbecue.id ? 'atualizado' : 'criado'
     }!`
 

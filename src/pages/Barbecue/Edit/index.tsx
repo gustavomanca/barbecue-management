@@ -34,11 +34,9 @@ export function EditBarbecuePage() {
 
   return (
     <S.Container>
-      <S.Title>Novo Churras</S.Title>
-
+      <S.Title>{barbecue.title}</S.Title>
       <S.Grid>
         <Form barbecue={barbecue} setBarbecue={setBarbecue} />
-
         <ParticipantsList
           onUpdateParticipants={onUpdateParticipants}
           participants={barbecue.participants}

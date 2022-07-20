@@ -7,7 +7,6 @@ type Props = {
 } & InputHTMLAttributes<HTMLInputElement>
 
 function Checkbox({ label, lineThrough, ...props }: Props) {
-  console.log({ lineThrough, label })
   return (
     <S.Container>
       <S.Input type="checkbox" {...props} />
