@@ -20,7 +20,7 @@ export function EditBarbecuePage() {
   })
 
   const fetch = useCallback(async () => {
-    const { data } = await get(`/barbecues/${id}`)
+    const data = await get(`/barbecues/${id}`)
     setBarbecue(data)
   }, [id])
 

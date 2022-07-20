@@ -30,6 +30,7 @@ function BarbecuesList() {
     if (!id) return
     await destroy(`/barbecues/${id}`)
     cogoToast.success(`Churras ${title} excluído!`)
+    fetchBarbecues()
   }
 
   useEffect(() => {
@@ -41,20 +42,26 @@ function BarbecuesList() {
   return (
     <S.Container>
       {barbecues.map((barbecue) => (
-        <S.Card
-          key={barbecue.id}
-          onClick={() => navigate(`/churras/editar/${barbecue.id}`)}
-        >
+        <S.Card key={barbecue.id}>
           <S.Title>{barbecue.title}</S.Title>
           <S.Text>Data: {barbecue.date || '-'}</S.Text>
           <S.Text>Participantes: {barbecue.participants.length}</S.Text>
           <S.Text>Valor arrecadado: R$ {currencyMask(barbecue.amount)}</S.Text>
 
-          <S.Delete
-            onClick={() => onDelete(barbecue?.id ?? '', barbecue.title)}
-          >
-            <S.TrashIcon />
-          </S.Delete>
+          <S.Actions>
+            <S.ActionButton
+              onClick={() => navigate(`/churras/editar/${barbecue.id}`)}
+              title={`Editar/Visualizar ${barbecue.title}`}
+            >
+              <S.PencilIcon />
+            </S.ActionButton>
+            <S.ActionButton
+              onClick={() => onDelete(barbecue?.id ?? '', barbecue.title)}
+              title={`Excluir ${barbecue.title}`}
+            >
+              <S.TrashIcon />
+            </S.ActionButton>
+          </S.Actions>
         </S.Card>
       ))}
     </S.Container>

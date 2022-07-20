@@ -41,11 +41,15 @@ function Form({ barbecue, setBarbecue }: Props) {
   const handleDate = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
     const masked = dateMask(value)
-    setBarbecue((prev) => ({ ...prev, date: masked }))
+
+    if (value.length < 10) {
+      return setBarbecue((prev) => ({ ...prev, date: masked }))
+    }
 
     const isValidDate = verifyIfIsAFutureDate(value)
     const date = isValidDate ? masked : ''
     setBarbecue((prev) => ({ ...prev, date }))
+    if (!isValidDate) cogoToast.error('Data inválida!')
   }
 
   const onAddParticipant = (participant: Participant) => {

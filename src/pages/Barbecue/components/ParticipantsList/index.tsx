@@ -33,7 +33,7 @@ function ParticipantsList({ onUpdateParticipants, participants }: Props) {
     onUpdateParticipants(updated)
   }
 
-  if (!participants.length)
+  if (!participants?.length)
     return <S.Title as="p">Ainda não há participantes na lista!</S.Title>
 
   return (
@@ -46,6 +46,7 @@ function ParticipantsList({ onUpdateParticipants, participants }: Props) {
               name={participant.id}
               id={participant.id}
               onChange={onCheckParticipant}
+              checked={participant.paid}
               label={`${participant.name} - R$ ${participant.value ?? '0,00'}`}
               lineThrough={participant.paid}
             />

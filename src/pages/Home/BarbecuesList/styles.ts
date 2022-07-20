@@ -33,7 +33,7 @@ export const Title = styled.h1``
 
 export const Text = styled.p``
 
-export const Delete = styled.button`
+export const Actions = styled.div`
   ${({ theme }) => css`
     position: absolute;
     right: ${theme.spacings.xxsmall};
@@ -45,10 +45,39 @@ export const Delete = styled.button`
 
     border: none;
 
+    background-color: transparent;
+  `}
+`
+
+export const ActionButton = styled.button`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
     height: ${theme.spacings.large};
     width: ${theme.spacings.large};
 
     background-color: transparent;
+  `}
+`
+
+export const PencilIcon = styled.img.attrs({
+  src: '/assets/images/pencil-icon.png'
+})`
+  ${({ theme }) => css`
+    height: ${theme.spacings.small};
+    width: ${theme.spacings.small};
+
+    opacity: 0.5;
+    transition: opacity 0.3s ease-out;
+    will-change: opacity;
+
+    &:hover {
+      opacity: 1;
+    }
   `}
 `
 
