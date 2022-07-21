@@ -8,7 +8,7 @@ Simples aplicação para gerenciamento de eventos de churrasco, onde cada evento
 
 ### Informações
 - O fluxo de login não contém validação
-- Para CRUD dos eventos utilizamos JSON Server, sendo necessário executá-lo para que a aplicação funcione corretamente. 
+- Para CRUD dos eventos utilizamos JSON Server, sendo necessário executá-lo para que a aplicação funcione corretamente. O arquivo *db.json* fica responsável por armazenar os dados da aplicação
 - Adicionado um delay de 1,5s para simular requisições reais, exibindo loader animado.
 - Ao criar um evento:
   - Somente datas futuras são permitidas
@@ -57,6 +57,7 @@ $ yarn start
 - Typescript
 - React Router
 - Context API
+- Axios
 - Styled Components
 - Polished
 - Plop.js
