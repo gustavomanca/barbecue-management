@@ -1,50 +1,66 @@
-# Getting Started with Create React App
+# Descrição
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Simples aplicação para gerenciamento de eventos de churrasco, onde cada evento contém informações simples:
 
-## Start Server
+- Título do evento (obrigatório)
+- Data
+- Lista de participantes (Nome e valor de contribuição)
 
-npx json-server --watch db.json --port 5000
+### Informações
+- O fluxo de login não contém validação
+- Para CRUD dos eventos utilizamos JSON Server, sendo necessário executá-lo para que a aplicação funcione corretamente. 
+- Adicionado um delay de 1,5s para simular requisições reais, exibindo loader animado.
+- Ao criar um evento:
+  - Somente datas futuras são permitidas
+  - Máscara para datas
+  - Máscara para valor de contribuição do participante
+- Toasts para principais notificações de sucesso/erro
+- Design responsivo
 
-## Available Scripts
+# Iniciando
 
-In the project directory, you can run:
+- Clonar repositório em algum diretório no seu computador:
 
-### `yarn start`
+```
+$ git clone https://github.com/gustavomanca/barbecue-management
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Navegar até o diretório: 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+$ cd barbecue-management
+```
 
-### `yarn test`
+# Instalação
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+``` 
+$ yarn
+```
+ou
+```
+$ yarn install
+```
 
-### `yarn build`
+# Iniciar servidor
+```
+$ npx json-server --watch db.json --port 5000
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Iniciar App
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+$ yarn start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Tecnologias utilizadas:
+- ReactJS
+- Typescript
+- React Router
+- Context API
+- Styled Components
+- Polished
+- Plop.js
+- CogoToast
+- ESLint
+- Husky/Lint Staged
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
